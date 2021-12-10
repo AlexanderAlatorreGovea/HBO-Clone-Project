@@ -9,11 +9,6 @@ import LazyLoad from "react-lazyload";
 import Placeholders from "../components/UI/Placeholders/Placeholders";
 
 export default function Home() {
-  const globalState = useStateContext();
-  const router = useRouter();
-
-  useEffect(() => {}, []);
-
   return AuthCheck(
     <MainLayout>
       <FeaturedMedia
