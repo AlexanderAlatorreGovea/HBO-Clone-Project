@@ -22,7 +22,8 @@ const MediaRow = (props) => {
         `https://api.themoviedb.org/3/${props.endpoint}&api_key=${api_key}&language=en-US`
       )
       .then(function (response) {
-        setMoviesData(shuffleArray(response.data.results));
+        const shuffledResults = shuffleArray(response.data.results);
+        setMoviesData(shuffledResults);
         setLoadingData(false);
       })
       .catch(function (error) {
@@ -30,7 +31,7 @@ const MediaRow = (props) => {
       });
   }, [changingData]);
 
-  const loopComp = (comp, digit) => {
+  const loopOverComponent = () => {
     let thumbnails = [
       <Skeleton key={"a"} />,
       <Skeleton key={"b"} />,
@@ -40,16 +41,13 @@ const MediaRow = (props) => {
       <Skeleton key={"f"} />,
       <Skeleton key={"g"} />,
     ];
-    // for (let index = 1; index <= digit; index++) {
-    //   thumbnails.push(comp);
-    // }
 
     return thumbnails;
   };
 
   const showThumbnails = (type) => {
     return loadingData
-      ? loopComp(<Skeleton />, 10)
+      ? loopOverComponent(<Skeleton />, 10)
       : movies.map((movie) => (
           <Thumbnail
             key={movie.id}

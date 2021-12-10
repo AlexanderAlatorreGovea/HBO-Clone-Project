@@ -86,6 +86,6 @@ export async function getServerSideProps(context) {
       genresData: genresData.data.genres,
       featuredData: shuffleArray(featuredData.data.results)[0],
       query: context.query,
-    }, // will be passed to the page component as props
+    }, 
   };
 }
