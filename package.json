@@ -9,6 +9,7 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "@alexanderalatorregovea/new-collection.ui.input-group": "^0.0.1",
     "axios": "^0.21.1",
     "local-storage": "^2.0.0",
     "next": "10.2.0",

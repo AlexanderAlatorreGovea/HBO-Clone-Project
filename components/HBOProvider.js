@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ls from "local-storage";
 export const StateContext = React.createContext();
 
@@ -20,22 +20,32 @@ export function HBOProvider({ children }) {
   const addToList = (video) => {
     const id = video.id;
     let myList;
-    if(ls('myList') !== null) {
-      myList = ls.get('myList') 
-      myList = [...myList, video]
-      ls.set('myList', myList)
-      setWatchList(myList)
+    if (ls("myList") !== null) {
+      myList = ls.get("myList");
+      myList = [...myList, video];
+      ls.set("myList", myList);
+      setWatchList(myList);
     } else {
-      ls.set('myList', [video])
+      ls.set("myList", [video]);
     }
-  }
+  };
 
   const removeFromList = (video) => {
+    console.log(video);
     let myList = ls("myList");
     myList = myList.filter((item) => item.mediaId != video);
-    ls.set('myList', myList)
-    setWatchList(myList)
+    ls.set("myList", myList);
+    setWatchList(myList);
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem("myList");
+
+    if (data) {
+      setWatchList(JSON.parse(data));
+    }
+  }, []);
+
 
   const thumbTypes = ["large-v", "small-v", "large-v", "small-h"];
 
@@ -55,7 +65,7 @@ export function HBOProvider({ children }) {
         watchList,
         setWatchList,
         removeFromList,
-        addToList
+        addToList,
       }}
     >
       {children}

@@ -25,48 +25,23 @@ const Account = (props) => {
     router.push(`/`);
   };
 
-  // // const showWatchList = globalState.watchList ? (
-  // //   globalState.watchList.map((item, idx) => (
-  // //     <div className="account__watch-video" key={idx}>
-  // //       <img src={`${item.mediaUrl}`} />
-  // //       <div className="account__watch-overlay">
-  // //         <div className="account__watch-buttons">
-  // //           <div className="account__watch-circle">
-  // //             <i
-  // //               className="fas fa-play"
-  // //               onClick={() => watchMedia(`/${item.mediaType}/${item.mediaId}`)}
-  // //             />
-  // //           </div>
-  // //           <div
-  // //             className="account__watch-circle"
-  // //             onClick={() => globalState.removeFromList(item.mediaId)}
-  // //           >
-  // //             <i className="fas fa-times" />
-  // //           </div>
-  // //         </div>
-  // //       </div>
-  // //     </div>
-  // //   ))
-  // // ) : (
-  // //   <div>Sorry No Movies Added</div>
-  // // );
-  console.log(globalState.watchList && globalState.watchList.length )
   const showWatchList = () => {
     return globalState.watchList.map((item, index) => {
+      console.log(item)
       return (
         <div className="account__watch-video" key={index}>
-          <img src={item.mediaUrl} />
+          <img src={item?.mediaUrl} />
           <div className="account__watch-overlay">
             <div className="account__watch-buttons">
               <div
                 className="account__watch-circle"
-                onClick={() => watchMedia(`/${item.mediaType}/${item.mediaId}`)}
+                onClick={() => watchMedia(`/${item?.mediaType}/${item?.mediaId}`)}
               >
                 <i className="fas fa-play" />
               </div>
               <div
                 className="account__watch-circle"
-                onClick={() => globalState.removeFromList(item.mediaId)}
+                onClick={() => globalState.removeFromList(item?.mediaId)}
               >
                 <i className="fas fa-times" />
               </div>
@@ -76,7 +51,7 @@ const Account = (props) => {
       );
     });
   };
-
+  console.log("globalState.watchList", globalState.watchList)
   return (
     <div
       className={`account ${

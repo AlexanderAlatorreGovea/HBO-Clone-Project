@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { useStateContext } from "../../HBOProvider";
+import { InputGroup } from "@alexanderalatorregovea/new-collection.ui.input-group";
 
 const SearchModal = () => {
   const globalState = useStateContext();
@@ -62,14 +63,18 @@ const SearchModal = () => {
       globalState.searchOpenAction(!globalState.searchOpen);
     }
   };
-  console.log(searchData);
+
+  const onCloseModal = () => {
+    globalState.searchOpenAction(!globalState.searchOpen);
+  };
+
   return (
     <div
       className={`search-modal ${
         globalState.searchOpen ? "search-modal--active" : ""
       }`}
     >
-      <div className="search-modal__input-group ">
+      {/* <div className="search-modal__input-group">
         <input
           className="search-modal__input"
           type="text"
@@ -77,13 +82,16 @@ const SearchModal = () => {
           onChange={handleInput}
           value={text}
         />
-        <div
-          className="search-modal__close-btn"
-          onClick={() => globalState.searchOpenAction(!globalState.searchOpen)}
-        >
+        <div className="search-modal__close-btn" onClick={onCloseModal}>
           <i className="fas fa-times" />
         </div>
-      </div>
+      </div> */}
+
+      <InputGroup
+        onCloseModal={onCloseModal}
+        handleInput={handleInput}
+        text={text}
+      />
 
       <h3 className="search-modal__title">
         {showResults && searchData.length >= 1
