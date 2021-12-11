@@ -25,13 +25,17 @@ export function HBOProvider({ children }) {
 
   const addVideoToWatchList = (video) => {
     const firstItemInArray = [];
-    ls.set("myList", [...firstItemInArray, video]);
-    setWatchList([...firstItemInArray, video]);
+    const withAddedVideo = [...firstItemInArray, video];
+
+    ls.set("myList", withAddedVideo);
+    setWatchList(withAddedVideo);
   };
 
   const addNewVideoToWatchList = (video) => {
-    ls.set("myList", [...watchList, video]);
-    setWatchList([...watchList, video]);
+    const withAddedVideo = [...watchList, video];
+    
+    ls.set("myList", withAddedVideo);
+    setWatchList(withAddedVideo);
   };
 
   const addToList = (video) => {
