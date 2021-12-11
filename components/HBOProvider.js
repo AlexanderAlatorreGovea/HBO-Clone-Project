@@ -7,10 +7,9 @@ export function useStateContext() {
 }
 
 const getMatchingWatchListId = (id, watchList) => {
-  console.log(typeof id)
-  console.log(watchList.mediaId)
-  const w =  watchList.find((media) => media.mediaId === id);
-  console.log(w)
+  if (!watchList) return;
+
+  return watchList.find((media) => +media.mediaId === +id);
 };
 
 export function HBOProvider({ children }) {
@@ -24,8 +23,18 @@ export function HBOProvider({ children }) {
   const [searchOpen, searchOpenAction] = useState(false);
   const [watchList, setWatchList] = useState(ls.get("myList"));
 
+  const addVideoToWatchList = (video) => {
+    const firstItemInArray = [];
+    ls.set("myList", [...firstItemInArray, video]);
+    setWatchList([...firstItemInArray, video]);
+  };
+
+  const addNewVideoToWatchList = (video) => {
+    ls.set("myList", [...watchList, video]);
+    setWatchList([...watchList, video]);
+  };
+
   const addToList = (video) => {
-    let myList;
     const { mediaId } = video;
 
     const hasMatchingMovieIdWatchList = getMatchingWatchListId(
@@ -33,32 +42,24 @@ export function HBOProvider({ children }) {
       watchList
     );
 
-    const myWatchListExists = ls("myList") !== null;
-
-    if (myWatchListExists && !hasMatchingMovieIdWatchList) {
-      myList = ls.get("myList");
-      myList = [...myList, video];
-      ls.set("myList", myList);
-      setWatchList(myList);
+    if (!watchList.length) {
+      addVideoToWatchList(video);
+      return;
     }
 
-    return ls.set("myList", [video]);
+    return watchList.map((item) =>
+      +item.mediaId !== +mediaId && !hasMatchingMovieIdWatchList
+        ? addNewVideoToWatchList(video, mediaId)
+        : null
+    );
   };
 
   const removeFromList = (video) => {
-    let myList = ls("myList");
-    myList = myList.filter((item) => item.mediaId != video);
+    const myList = ls("myList").filter((item) => item.mediaId != video);
+
     ls.set("myList", myList);
     setWatchList(myList);
   };
-
-  useEffect(() => {
-    const data = localStorage.getItem("myList");
-
-    if (data) {
-      setWatchList(JSON.parse(data));
-    }
-  }, []);
 
   const thumbTypes = ["large-v", "small-v", "large-v", "small-h"];
 

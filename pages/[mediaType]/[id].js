@@ -63,6 +63,6 @@ export async function getServerSideProps(context) {
     props: {
       mediaData: mediaData.data ? mediaData.data : [],
       query: context.query,
-    }, // will be passed to the page component as props
+    }, 
   };
 }

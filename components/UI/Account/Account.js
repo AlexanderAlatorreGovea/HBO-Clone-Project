@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import ls from "local-storage";
 
-const Account = (props) => {
+const Account = () => {
   const globalState = useStateContext();
   const router = useRouter();
 
@@ -34,7 +34,9 @@ const Account = (props) => {
             <div className="account__watch-buttons">
               <div
                 className="account__watch-circle"
-                onClick={() => watchMedia(`/${item?.mediaType}/${item?.mediaId}`)}
+                onClick={() =>
+                  watchMedia(`/${item?.mediaType}/${item?.mediaId}`)
+                }
               >
                 <i className="fas fa-play" />
               </div>
@@ -56,13 +58,12 @@ const Account = (props) => {
         globalState.accountModalOpen ? "account--active" : ""
       }`}
     >
-      <div
-        className="account__details"
-        style={{ width: globalState.watchList && globalState.watchList.length ? "" : "400px"  }}
-      >
+      <div className="account__details">
         <div className="account__title">My List</div>
         <div className="account__watch-list">
-          {globalState.watchList !== null ? showWatchList() : "Sorry No Movies Added"}
+          {globalState.watchList !== null
+            ? showWatchList()
+            : "Sorry No Movies Added"}
         </div>
       </div>
       <div className="account__menu">
