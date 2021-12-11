@@ -57,7 +57,7 @@ export async function getServerSideProps(context) {
       `https://api.themoviedb.org/3/${context.query.mediaType}/${context.query.id}?api_key=${api_key}&language=en-US`
     );
   } catch (error) {
-    console.log("error:", error);
+    console.error("error:", error);
   }
   return {
     props: {

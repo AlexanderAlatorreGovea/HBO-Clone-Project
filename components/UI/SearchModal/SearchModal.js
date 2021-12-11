@@ -24,7 +24,7 @@ const SearchModal = () => {
 
       setShowResults(false);
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   }, []);
 
@@ -49,7 +49,7 @@ const SearchModal = () => {
       );
       setShowResults(true);
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   };
 

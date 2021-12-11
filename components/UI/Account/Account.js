@@ -27,7 +27,6 @@ const Account = (props) => {
 
   const showWatchList = () => {
     return globalState.watchList.map((item, index) => {
-      console.log(item)
       return (
         <div className="account__watch-video" key={index}>
           <img src={item?.mediaUrl} />
@@ -51,7 +50,6 @@ const Account = (props) => {
       );
     });
   };
-  console.log("globalState.watchList", globalState.watchList)
   return (
     <div
       className={`account ${

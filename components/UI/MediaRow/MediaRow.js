@@ -27,7 +27,7 @@ const MediaRow = (props) => {
         setLoadingData(false);
       })
       .catch(function (error) {
-        console.log(`error res from ${props.title}`, error);
+        console.error(`error res from ${props.title}`, error);
       });
   }, [changingData]);
 

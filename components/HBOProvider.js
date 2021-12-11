@@ -6,6 +6,13 @@ export function useStateContext() {
   return useContext(StateContext);
 }
 
+const getMatchingWatchListId = (id, watchList) => {
+  console.log(typeof id)
+  console.log(watchList.mediaId)
+  const w =  watchList.find((media) => media.mediaId === id);
+  console.log(w)
+};
+
 export function HBOProvider({ children }) {
   const [user, setUser] = useState("");
   const defaultUserImg = "https://uifaces.co/our-content/donated/vIqzOHXj.jpg";
@@ -18,20 +25,27 @@ export function HBOProvider({ children }) {
   const [watchList, setWatchList] = useState(ls.get("myList"));
 
   const addToList = (video) => {
-    const id = video.id;
     let myList;
-    if (ls("myList") !== null) {
+    const { mediaId } = video;
+
+    const hasMatchingMovieIdWatchList = getMatchingWatchListId(
+      mediaId,
+      watchList
+    );
+
+    const myWatchListExists = ls("myList") !== null;
+
+    if (myWatchListExists && !hasMatchingMovieIdWatchList) {
       myList = ls.get("myList");
       myList = [...myList, video];
       ls.set("myList", myList);
       setWatchList(myList);
-    } else {
-      ls.set("myList", [video]);
     }
+
+    return ls.set("myList", [video]);
   };
 
   const removeFromList = (video) => {
-    console.log(video);
     let myList = ls("myList");
     myList = myList.filter((item) => item.mediaId != video);
     ls.set("myList", myList);
@@ -45,7 +59,6 @@ export function HBOProvider({ children }) {
       setWatchList(JSON.parse(data));
     }
   }, []);
-
 
   const thumbTypes = ["large-v", "small-v", "large-v", "small-h"];
 
