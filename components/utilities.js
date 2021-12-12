@@ -20,7 +20,7 @@ export const apiCall = (url, err, dataToChange) => {
         setData(response.data);
         setLoadingData(false);
       })
-      .catch((error) => console.error(`error res from ${err}`, error));
+      .catch((error) => console.error(`error from ${err}`, error));
   }, [dataToChange]);
 
   return {

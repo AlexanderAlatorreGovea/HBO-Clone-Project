@@ -12,7 +12,6 @@ import { shuffleArray } from "../../components/utilities";
 
 export default function MediaTypePage(props) {
   const globalState = useStateContext();
-  const router = useRouter();
 
   const showRandomMedia = () => {
     let thumbtype;

@@ -1,11 +1,9 @@
 import "./GenreNav";
 
-import { useStateContext } from "../../HBOProvider";
 import Link from "next/link";
 import { useState } from "react";
 
 const GenreNav = (props) => {
-  // const globalState = useStateContext();
   const [activeNav, setActiveNav] = useState(false);
   setTimeout(() => setActiveNav(true), 100);
 
