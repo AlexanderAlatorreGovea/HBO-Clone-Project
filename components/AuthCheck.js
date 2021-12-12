@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ls from "local-storage";
 import { useMounted } from "./UI/Hooks/UseMounted";
-import { route } from "next/dist/next-server/server/router";
 
 const AuthCheck = (component) => {
   const [userLoggedIn, setUserLoggedI] = useState(false);

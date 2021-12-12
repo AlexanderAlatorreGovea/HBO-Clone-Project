@@ -74,19 +74,6 @@ const SearchModal = () => {
         globalState.searchOpen ? "search-modal--active" : ""
       }`}
     >
-      {/* <div className="search-modal__input-group">
-        <input
-          className="search-modal__input"
-          type="text"
-          placeholder="search for a title"
-          onChange={handleInput}
-          value={text}
-        />
-        <div className="search-modal__close-btn" onClick={onCloseModal}>
-          <i className="fas fa-times" />
-        </div>
-      </div> */}
-
       <InputGroup
         onCloseModal={onCloseModal}
         handleInput={handleInput}

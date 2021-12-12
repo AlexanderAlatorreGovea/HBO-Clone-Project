@@ -1,16 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import ls from "local-storage";
-export const StateContext = React.createContext();
-
-export function useStateContext() {
-  return useContext(StateContext);
-}
 
 const getMatchingWatchListId = (id, watchList) => {
   if (!watchList) return;
 
   return watchList.find((media) => +media.mediaId === +id);
 };
+
+export const StateContext = React.createContext();
 
 export function HBOProvider({ children }) {
   const [user, setUser] = useState("");
@@ -23,7 +20,7 @@ export function HBOProvider({ children }) {
   const [searchOpen, searchOpenAction] = useState(false);
   const [watchList, setWatchList] = useState(ls.get("myList"));
 
-  const addVideoToWatchList = (video) => {
+  const addFirstVideoToWatchList = (video) => {
     const firstItemInArray = [];
     const withAddedVideo = [...firstItemInArray, video];
 
@@ -33,7 +30,7 @@ export function HBOProvider({ children }) {
 
   const addNewVideoToWatchList = (video) => {
     const withAddedVideo = [...watchList, video];
-    
+
     ls.set("myList", withAddedVideo);
     setWatchList(withAddedVideo);
   };
@@ -46,20 +43,19 @@ export function HBOProvider({ children }) {
       watchList
     );
 
-    if (!watchList.length) {
-      addVideoToWatchList(video);
-      return;
+    if (watchList.length) {
+      return watchList.map((item) =>
+        +item?.mediaId !== +mediaId && !hasMatchingMovieIdWatchList
+          ? addNewVideoToWatchList(video, mediaId)
+          : watchList
+      );
     }
 
-    return watchList.map((item) =>
-      +item.mediaId !== +mediaId && !hasMatchingMovieIdWatchList
-        ? addNewVideoToWatchList(video, mediaId)
-        : null
-    );
+    return addFirstVideoToWatchList(video);
   };
 
   const removeFromList = (video) => {
-    const myList = ls("myList").filter((item) => item.mediaId != video);
+    const myList = ls("myList").filter((item) => +item.mediaId !== +video);
 
     ls.set("myList", myList);
     setWatchList(myList);
@@ -89,4 +85,8 @@ export function HBOProvider({ children }) {
       {children}
     </StateContext.Provider>
   );
+}
+
+export function useStateContext() {
+  return useContext(StateContext);
 }

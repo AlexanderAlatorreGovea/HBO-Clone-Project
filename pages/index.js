@@ -1,6 +1,3 @@
-import { useEffect } from "react";
-import { useStateContext } from "../components/HBOProvider";
-import { useRouter } from "next/router";
 import MainLayout from "../components/Layouts/MainLayout";
 import FeaturedMedia from "../components/UI/FeaturedMedia/FeaturedMedia";
 import MediaRow from "../components/UI/MediaRow/MediaRow";

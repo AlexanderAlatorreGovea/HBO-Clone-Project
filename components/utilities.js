@@ -7,26 +7,24 @@ export const shuffleArray = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
+};
 
-export const apiCall = (url, err, changeData) => {
+export const apiCall = (url, err, dataToChange) => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
       .get(url)
-      .then(function (response) {
+      .then((response) => {
         setData(response.data);
         setLoadingData(false);
       })
-      .catch(function (error) {
-        console.error(`error res from ${err}`, error);
-      });
-  }, [changeData]);
-  
+      .catch((error) => console.error(`error res from ${err}`, error));
+  }, [dataToChange]);
+
   return {
     data,
-    loadingData
-  }
-}
+    loadingData,
+  };
+};
