@@ -7,7 +7,7 @@ import { InputGroup } from "@alexanderalatorregovea/new-collection.ui.input-grou
 
 const SearchModal = () => {
   const globalState = useStateContext();
-  const [popData, setPopData] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [text, setText] = useState("");
@@ -17,10 +17,10 @@ const SearchModal = () => {
 
   useEffect(async () => {
     try {
-      const popData = await axios.get(
+      const popularMovies = await axios.get(
         `https://api.themoviedb.org/3/discover/movie?primary_release_year=2021&api_key=${API_KEY}&language=en-US`
       );
-      setPopData(popData.data.results.filter((item, i) => i < 14));
+      setPopularMovies(popularMovies.data.results.filter((item, i) => i < 14));
 
       setShowResults(false);
     } catch (error) {
@@ -36,11 +36,12 @@ const SearchModal = () => {
     }
   }, [globalState.searchOpen]);
 
-  const handleInput = async (e) => {
+  const handleInput = async (event) => {
+    const { value } = event.target;
     try {
-      setText(e.target.value);
+      setText(value);
       const searchData = await axios.get(
-        `https://api.themoviedb.org/3/search/multi?query=${e.target.value}&api_key=${API_KEY}&language=en-US`
+        `https://api.themoviedb.org/3/search/multi?query=${value}&api_key=${API_KEY}&language=en-US`
       );
       setSearchData(
         searchData.data.results.filter(
@@ -94,7 +95,7 @@ const SearchModal = () => {
           />
         ) : (
           <PopularResults
-            popData={popData}
+            popularMovies={popularMovies}
             clickedThumbnail={clickedThumbnail}
           />
         )}
@@ -103,40 +104,32 @@ const SearchModal = () => {
   );
 };
 
-const PopularResults = (props) => {
-  return props.popData.map((item, index) => {
-    return (
-      <div
-        key={index}
-        className="search-modal__thumbnail"
-        onClick={() => props.clickedThumbnail("popular", item.id)}
-      >
-        <img src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} />
-        <div className="search-modal__top-layer">
-          <i className="fas fa-play" />
-        </div>
+const PopularResults = ({ popularMovies, clickedThumbnail }) =>
+  popularMovies.map((item, index) => (
+    <div
+      key={index}
+      className="search-modal__thumbnail"
+      onClick={() => clickedThumbnail("popular", item.id)}
+    >
+      <img src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} />
+      <div className="search-modal__top-layer">
+        <i className="fas fa-play" />
       </div>
-    );
-  });
-};
+    </div>
+  ));
 
-const SearchResults = (props) => {
-  return props.searchData.map((item, index) => {
-    return (
-      <div
-        key={index}
-        className="search-modal__thumbnail"
-        onClick={() =>
-          props.clickedThumbnail("popular", item.id, item.media_type)
-        }
-      >
-        <img src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} />
-        <div className="search-modal__top-layer">
-          <i className="fas fa-play" />
-        </div>
+const SearchResults = ({ searchData, clickedThumbnail }) =>
+  searchData.map((item, index) => (
+    <div
+      key={index}
+      className="search-modal__thumbnail"
+      onClick={() => clickedThumbnail("popular", item.id, item.media_type)}
+    >
+      <img src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} />
+      <div className="search-modal__top-layer">
+        <i className="fas fa-play" />
       </div>
-    );
-  });
-};
+    </div>
+  ));
 
 export default SearchModal;
