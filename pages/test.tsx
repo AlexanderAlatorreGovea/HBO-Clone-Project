@@ -2,9 +2,6 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-
-// this returns grandpa father son
-
 function createSubscribable<MessageType>() {
   const subscribers: Set<(msg: MessageType) => void> = new Set();
 
