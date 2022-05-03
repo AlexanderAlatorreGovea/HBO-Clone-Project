@@ -1,1 +1,1 @@
-This is a react project that I built with react.
+This is a react project.
