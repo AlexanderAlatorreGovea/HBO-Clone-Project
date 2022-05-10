@@ -1,1 +1,1 @@
-This is a react project.
+This is a react project to practice NextJs.
